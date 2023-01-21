@@ -1,0 +1,75 @@
+<h1 style="text-align:center">Test Auth Example</h1>
+<div class="login" ng-app="myApp" ng-controller="myCtrl">
+  <h2 class="login-header" s>Log in</h2>
+  <form [formGroup]="authForm" class="login-container" (ngSubmit)="signIn()">
+    <p [ngClass]="{ 'has-error': isSubmitted && formControls.username.errors }">
+      <input
+        type="username"
+        placeholder="Username"
+        formControlName="username"
+      />
+    </p>
+    <div *ngIf="isSubmitted && formControls.username.errors" class="help-block">
+      <div *ngIf="formControls.username.errors">
+        Username is required, min3, max 24 characters
+      </div>
+    </div>
+
+    <p [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+      <input type="email" placeholder="Email" formControlName="email" />
+    </p>
+    <div *ngIf="isSubmitted && formControls.email.errors" class="help-block">
+      <div *ngIf="formControls.email.errors.required">
+        Email is required, valid email address
+      </div>
+    </div>
+    <select
+      [ngClass]="{ 'has-error': isSubmitted && formControls.type.errors }"
+      class="select"
+      type="type"
+      formControlName="type"
+    >
+      <option value="user">User</option>
+      <option value="admin">Admin</option>
+    </select>
+
+    <div *ngIf="isSubmitted && formControls.type.errors" class="help-block">
+      <div *ngIf="formControls.type.errors">Type is required</div>
+    </div>
+
+    <p [ngClass]="{ 'has-error': isSubmitted && formControls.password.errors }">
+      <input
+        type="password"
+        placeholder="Password"
+        formControlName="password"
+      />
+    </p>
+    <div *ngIf="isSubmitted && formControls.password.errors" class="help-block">
+      <div *ngIf="formControls.password.errors">
+        Password is required, min 5, max 24 characters, upper and lower case, at
+        least one special character
+      </div>
+    </div>
+
+    <p
+      *ngIf="
+        formControls.username.errors ||
+        formControls.type.errors ||
+        formControls.email.errors ||
+        formControls.password.errors
+      "
+    >
+      <input type="submit" value="LogIn" formControlName="button" disabled />
+    </p>
+    <p
+      *ngIf="
+        !formControls.username.errors &&
+        !formControls.type.errors &&
+        !formControls.email.errors &&
+        !formControls.password.errors
+      "
+    >
+      <input type="submit" value="LogIn" formControlName="button" />
+    </p>
+  </form>
+</div>
